@@ -20,6 +20,9 @@ Minimal module to bind your Redux state to your Angular controller, see usage be
                 };
             }, this);
 
+            // this is from the Redux state!
+            console.log(this.api);
+
             $scope.$on('$destroy', unsubscribe);
         };
     }]);
