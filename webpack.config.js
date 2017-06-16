@@ -9,19 +9,5 @@ module.exports = {
     externals: {
         angular: 'angular',
         redux: 'redux'
-    },
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        plugins: ['transform-object-rest-spread'],
-                        presets: ['es2015']
-                    }
-                }
-            }
-        ]
     }
 }

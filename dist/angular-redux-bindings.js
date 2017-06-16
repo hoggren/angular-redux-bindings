@@ -80,57 +80,48 @@ module.exports = redux;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_angular__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_redux__);
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 
-var _angular = __webpack_require__(0);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_angular__["module"])('angular-redux-bindings', [])
+    .provider('$angularRedux', [function () { // no arrow-style to get *this*
+        this.reducers = {};
+        this.middlewares = [];
+        this.storeEnhancers = [];
 
-var _redux = __webpack_require__(1);
+        this.store;
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+        this.$get = () => {
+            return {
+                getState: () => this.store.getState(),
+                dispatch: (action) => this.store.dispatch(action),
+                bindState: (bindFn, target) => {
+                    const unsubscribe = this.store.subscribe(() => {
+                        const state = this.store.getState();
 
-exports.default = (0, _angular.module)('angular-redux-bindings', []).provider('$angularRedux', [function () {
-    var _this = this;
+                        Object.assign(target, bindFn(state));
+                    });
 
-    // no arrow-style to get *this*
-    this.reducers = {};
-    this.middlewares = [];
-    this.storeEnhancers = [];
-
-    this.store;
-
-    this.$get = function () {
-        return {
-            getState: function getState() {
-                return _this.store.getState();
-            },
-            dispatch: function dispatch(action) {
-                return _this.store.dispatch(action);
-            },
-            bindState: function bindState(bindFn, target) {
-                var unsubscribe = _this.store.subscribe(function () {
-                    var state = _this.store.getState();
-
-                    Object.assign(target, bindFn(state));
-                });
-
-                return unsubscribe;
-            }
+                    return unsubscribe;
+                },
+            };
         };
-    };
-    this.createStore = function (reducers, middlewares) {
-        _this.reducers = reducers;
-        _this.middlewares = middlewares;
+        this.createStore = (reducers, middlewares) => {
+            this.reducers = reducers;
+            this.middlewares = middlewares;
 
-        _this.store = (0, _redux.createStore)((0, _redux.combineReducers)(reducers), _redux.applyMiddleware.apply(undefined, _toConsumableArray(middlewares)));
-    };
-}]).name;
+            this.store = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_redux__["createStore"])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_redux__["combineReducers"])(reducers), __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_redux__["applyMiddleware"])(...middlewares));
+        };
+    }])
+    .name);
 
 /***/ })
 /******/ ]);
