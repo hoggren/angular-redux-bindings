@@ -1,7 +1,6 @@
-import { module } from 'angular';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
 
-export default module('angular-redux-bindings', [])
+export default angular.module('angularReduxBindings', [])
     .provider('$angularRedux', [function () { // no arrow-style to get *this*
         this.reducers = {};
         this.middlewares = [];
@@ -14,6 +13,9 @@ export default module('angular-redux-bindings', [])
                 getState: () => this.store.getState(),
                 dispatch: (action) => this.store.dispatch(action),
                 bindState: (bindFn, target) => {
+                    //initialize binding
+                    Object.assign(target, bindFn(this.store.getState()));
+
                     const unsubscribe = this.store.subscribe(() => {
                         const state = this.store.getState();
 
@@ -30,5 +32,4 @@ export default module('angular-redux-bindings', [])
 
             this.store = createStore(combineReducers(reducers), applyMiddleware(...middlewares));
         };
-    }])
-    .name;
+    }]).name;
